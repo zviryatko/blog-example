@@ -1,0 +1,12 @@
+<?php
+/**
+ * @file
+ * Basic template to render confirm form.
+ *
+ * @var $form \Zend\Form\Form
+ */
+?>
+
+<div class="alert alert-warning"><?php print $this->escapeHtml($form->getOption('message')); ?></div>
+
+<?php print $this->form($form); ?>

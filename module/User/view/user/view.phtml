@@ -1,0 +1,13 @@
+<?php
+/**
+ * @file
+ * User index page
+ *
+ * @var $user \User\Entity\User
+ */
+
+$this->headTitle($user->getFullName()); ?>
+
+<?php print $this->escapeHtml($user->getFullName()); ?>
+    <br/>
+<?php print $this->escapeHtml($user->getEmail()); ?>

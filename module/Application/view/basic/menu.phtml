@@ -1,0 +1,40 @@
+<?php
+/**
+ * @file
+ * User menu template.
+ *
+ * @var $container \Zend\Navigation\Navigation
+ * @var $menu      \Application\View\Helper\Navigation\Menu
+ */
+$menu = $this->navigation()->menu();
+?>
+<ul class="<?php echo $menu->getUlClass(); ?>">
+    <?php foreach ($container as $page):
+        /** @var \Zend\Navigation\Page\Mvc $page */
+        // when using partials we need to manually check for ACL conditions
+        if (!$this->navigation()->accept($page)) {
+            continue;
+        }
+
+        // Add icon and arrow to label.
+        if (isset($page->icon) || $page->hasPages()) {
+            $label = '<span>' . $page->getLabel() . '</span>';
+            if (isset($page->icon)) {
+                $label = "<i class='icon-{$page->icon}'></i>" . $label;
+            }
+            if ($page->hasPages()) {
+                $label .= '<span class="arrow"></span>';
+            }
+            $page->setLabel($label);
+        }
+
+        ?>
+        <li class="<?php echo $menu->getLiClass($page); ?>">
+            <?php echo $menu->htmlify($page, false, $menu->getAddClassToListItem()); ?>
+
+            <?php if ($page->hasPages()) : ?>
+                <?php echo $menu->setUlClass('sub-menu')->renderPartial($page); ?>
+            <?php endif; ?>
+        </li>
+    <?php endforeach ?>
+</ul>

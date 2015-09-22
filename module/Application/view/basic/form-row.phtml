@@ -1,0 +1,31 @@
+<?php
+/**
+ * @file
+ * Basic template to render form row.
+ *
+ * @var $element         \Zend\Form\Element
+ * @var $label           string
+ * @var $labelAttributes array
+ * @var $labelPosition   string
+ * @var $renderErrors    bool
+ */
+$errors = $element->getMessages();
+?>
+<div class="form-group<?php if ($element->getMessages()): ?> has-error<?php endif; ?>">
+    <?php if ($label): ?>
+        <?php print $this->formLabel($element); ?>
+    <?php endif; ?>
+
+    <div class="<?php print $this->escapeHtmlAttr($element->getOption('wrapper_class')); ?>">
+        <?php print $this->formElement($element); ?>
+
+        <?php if ($element->getOption('help')): ?>
+            <p class="help-block"><?php print $element->getOption('help'); ?></p>
+        <?php endif; ?>
+        <?php if ($element->getMessages()): ?>
+            <?php foreach($element->getMessages() as $message): ?>
+                <p class="help-block"><?php print $message; ?></p>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</div>

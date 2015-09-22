@@ -1,0 +1,19 @@
+<?php
+/**
+ * @file
+ * Article view template.
+ *
+ * @var $article \Article\Entity\Article
+ */
+
+$this->headTitle($this->escapeHtml($article->getTitle()));
+?>
+<?php print $article->getText(); ?>
+
+
+<p class="metadata">
+    <?php printf($this->translate('Posted by %s | on %s'), $this->username($article->getAuthor()), $this->articleMetadata($article)); ?>
+    <?php if ($this->identity()): ?>
+        | <a class="warning" role="button" href="<?php print $this->url('article/edit', array('id' => $article->getId())); ?>"><?php print $this->translate('Edit'); ?></a>
+    <?php endif; ?>
+</p>
