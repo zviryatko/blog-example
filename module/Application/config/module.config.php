@@ -120,6 +120,15 @@ return array(
         'aliases' => array(
             'formrow' => 'Application\View\Helper\FormRowFactory',
         ),
+        'invokables' => array(
+            'formimagefile' => 'Application\View\Helper\FormImageFile',
+            'formelement' => 'Application\View\Helper\FormElement',
+        ),
+    ),
+    'form_elements' => array(
+        'invokables' => array(
+            'imagefile' => 'Application\Form\Element\ImageFile',
+        ),
     ),
     // Placeholder for console routes
     'console' => array(

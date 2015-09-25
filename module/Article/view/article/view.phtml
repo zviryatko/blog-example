@@ -8,8 +8,15 @@
 
 $this->headTitle($this->escapeHtml($article->getTitle()));
 ?>
-<?php print $article->getText(); ?>
+<h1><?php print $this->escapeHtml($article->getTitle()); ?></h1>
 
+<div class="thumbnail">
+    <a href="<?php print $this->serverUrl() . '/files/' . $article->getThumbnail()->getFilename(); ?>">
+        <img src="<?php print $this->serverUrl() . '/files/' . $article->getThumbnail()->getFilename(); ?>" />
+    </a>
+</div>
+
+<?php print $article->getText(); ?>
 
 <p class="metadata">
     <?php printf($this->translate('Posted by %s | on %s'), $this->username($article->getAuthor()), $this->articleMetadata($article)); ?>

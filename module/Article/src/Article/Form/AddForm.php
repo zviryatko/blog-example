@@ -62,7 +62,7 @@ class AddForm extends AbstractForm implements InputFilterProviderInterface
         $this->add(
             array(
                 'name' => 'thumbnail',
-                'type' => 'file',
+                'type' => 'imageFile',
                 'options' => array(
                     'label' => $this->translate('Thumbnail'),
                     'label_attributes' => array(
@@ -164,11 +164,12 @@ class AddForm extends AbstractForm implements InputFilterProviderInterface
                 ),
             ),
             'thumbnail' => array(
+                'required' => false,
                 'filters' => array(
                     array(
                         'name' => 'filerenameupload',
                         'options' => array(
-                            'target' => getcwd() . '/public/files/article/thumbnail.png',
+                            'target' => getcwd() . '/public/files/thumbnail.png',
                             'randomize' => true,
                         ),
                     ),

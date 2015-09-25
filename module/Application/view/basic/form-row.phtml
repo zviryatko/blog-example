@@ -9,9 +9,8 @@
  * @var $labelPosition   string
  * @var $renderErrors    bool
  */
-$errors = $element->getMessages();
 ?>
-<div class="form-group<?php if ($element->getMessages()): ?> has-error<?php endif; ?>">
+<div class="form-group">
     <?php if ($label): ?>
         <?php print $this->formLabel($element); ?>
     <?php endif; ?>
@@ -22,10 +21,13 @@ $errors = $element->getMessages();
         <?php if ($element->getOption('help')): ?>
             <p class="help-block"><?php print $element->getOption('help'); ?></p>
         <?php endif; ?>
-        <?php if ($element->getMessages()): ?>
-            <?php foreach($element->getMessages() as $message): ?>
-                <p class="help-block"><?php print $message; ?></p>
-            <?php endforeach; ?>
+
+        <?php if ($renderErrors): ?>
+            <?php print $this->formElementErrors()
+                ->setMessageOpenFormat('<div class="has-error"><p class="help-block">')
+                ->setMessageSeparatorString('</p><p class="help-block">')
+                ->setMessageCloseString('</p></div>')
+                ->render($element); ?>
         <?php endif; ?>
     </div>
 </div>

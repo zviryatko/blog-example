@@ -12,7 +12,7 @@
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
                 <a href="<?php print $this->url('article/view', array('id' => $article->getId())); ?>">
-                    <img src="<?php print $this->serverUrl() . '/files/article/' . $article->getThumbnail()->getFilename(); ?>" />
+                    <img src="<?php print $this->serverUrl() . '/files/' . $article->getThumbnail()->getFilename(); ?>" />
                 </a>
 
                 <div class="caption">
