@@ -1,0 +1,10 @@
+.sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini {
+    line-height: 1.4;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.logo-mini .logo-amp {
+    color: tomato;
+}

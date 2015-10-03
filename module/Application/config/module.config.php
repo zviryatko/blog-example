@@ -123,6 +123,10 @@ return array(
         'invokables' => array(
             'formimagefile' => 'Application\View\Helper\FormImageFile',
             'formelement' => 'Application\View\Helper\FormElement',
+            'striptags' => 'Application\View\Helper\StripTags',
+            'summarize' => 'Application\View\Helper\Summarize',
+            'pageTitle' => 'Application\View\Helper\PageTitle',
+            'pageDescription' => 'Application\View\Helper\PageDescription',
         ),
     ),
     'form_elements' => array(

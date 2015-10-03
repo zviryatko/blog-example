@@ -1,0 +1,42 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle($this->translate('Log in'))
+        ->setSeparator(' - ')
+        ->setAutoEscape(false); ?>
+
+    <?php echo $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge'); ?>
+
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        ->prependStylesheet($this->basePath('css/admin.css'))
+        ->prependStylesheet($this->basePath('js/plugins/iCheck/square/blue.css'))
+        ->prependStylesheet($this->basePath('css/AdminLTE.min.css'))
+        ->prependStylesheet('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css')
+        ->prependStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')
+        ->prependStylesheet($this->basePath('css/bootstrap.min.css')); ?>
+
+    <?php echo $this->headScript()
+        ->prependFile($this->basePath('js/plugins/iCheck/icheck.min.js'))
+        ->prependFile($this->basePath('js/bootstrap.min.js'))
+        ->prependFile($this->basePath('js/jquery.min.js'))
+        ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9'))
+        ->prependFile($this->basePath('js/html5shiv.min.js'), 'text/javascript', array('conditional' => 'lt IE 9')); ?>
+
+</head>
+
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="<?php echo $this->url('admin'); ?>"><?php echo $this->translate('<b>HTML&CMS</b> Panel'); ?></a>
+    </div>
+    <div class="login-box-body">
+        <?php echo $this->content; ?>
+    </div>
+</div>
+<?php echo $this->inlineScript() ?>
+</body>
+</html>

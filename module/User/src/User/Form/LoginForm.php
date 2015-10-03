@@ -58,10 +58,18 @@ class LoginForm extends AbstractForm implements InputFilterProviderInterface
 
         $this->add(
             array(
+                'name' => 'remember_me',
+                'type' => 'checkbox',
+                'label' => $this->translate('Remember me'),
+            )
+        );
+
+        $this->add(
+            array(
                 'name' => 'submit',
                 'type' => 'submit',
                 'attributes' => array(
-                    'value' => $this->translate('Login'),
+                    'value' => $this->translate('Sign in'),
                 ),
             )
         );

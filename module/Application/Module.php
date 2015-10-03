@@ -15,6 +15,8 @@ use Zend\Mvc\MvcEvent;
 use Zend\Navigation\View\HelperConfig;
 use Zend\Stdlib\ArrayUtils;
 use Zend\View\Helper\Navigation\PluginManager;
+use Zend\View\Helper\Placeholder\Container\AbstractContainer;
+use Zend\View\HelperPluginManager;
 
 class Module
 {
@@ -27,12 +29,11 @@ class Module
         $moduleRouteListener->attach($eventManager);
 
         $eventManager->attach(MvcEvent::EVENT_ROUTE, array($this, 'onRoute'));
-
+        $eventManager->attach(MvcEvent::EVENT_RENDER, array($this, 'onRender'));
 
         $routePluginManager = $serviceManager->get('RoutePluginManager');
         $config = $serviceManager->get('Config');
         $config['router']['route_plugins'] = $routePluginManager;
-        $a=1;
     }
 
     public function onRoute(MvcEvent $event)
@@ -50,6 +51,28 @@ class Module
             ArrayUtils::filter($filters, 'is_string');
             $route->setParam('filters', $filters);
         }
+    }
+
+    public function onRender(MvcEvent $event)
+    {
+        $app = $event->getApplication();
+        $serviceManager = $app->getServiceManager();
+        $route = $event->getRouteMatch();
+        /** @var HelperPluginManager $viewHelperManager */
+        $viewHelperManager = $serviceManager->get('viewhelpermanager');
+
+        $viewModel = $event->getViewModel();
+        $helpers = array('headTitle', 'pageTitle', 'pageDescription');
+        foreach ($helpers as $helperName) {
+            $variable = $viewModel->getVariable($helperName, $route->getParam($helperName));
+            if ($variable && $viewHelperManager->has($helperName)) {
+                $helper = $viewHelperManager->get($helperName);
+                if (is_callable($helper)) {
+                    $helper($variable, AbstractContainer::SET);
+                }
+            }
+        }
+
     }
 
     public function getConfig()

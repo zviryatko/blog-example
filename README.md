@@ -3,8 +3,9 @@ ZF2+Doctrine example Application
 
 ToDo
 ------------
-[] Fix password hash generating
-[] Move file save path to config per entity
+
+- [] Fix password hash generating
+- [] Move file save path to config per entity
 
 Installation using Composer
 ---------------------------

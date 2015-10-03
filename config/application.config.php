@@ -12,6 +12,7 @@ return array(
         'DoctrineORMModule',
         'QuCKEditor',
         'Application',
+        'Admin',
         'User',
         'Article',
     ),

@@ -4,8 +4,81 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "91dba95adf95a49ec2f0ab7a516e60cb",
+    "hash": "86f849d0f98fc013eeb3528729f001e5",
     "packages": [
+        {
+            "name": "aboustayyef/summarizer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aboustayyef/TextSummarizer.git",
+                "reference": "43d893e444978baf69ab9090695a8c68369b9758"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aboustayyef/TextSummarizer/zipball/43d893e444978baf69ab9090695a8c68369b9758",
+                "reference": "43d893e444978baf69ab9090695a8c68369b9758",
+                "shasum": ""
+            },
+            "require": {
+                "camspiers/porter-stemmer": "^1.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "2.2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Aboustayyef\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mustapha Hamoui",
+                    "email": "mustapha@hamoui.com"
+                }
+            ],
+            "description": "a utility class that summarizes text based on the flipboard method",
+            "keywords": [
+                "summarization",
+                "text"
+            ],
+            "time": "2015-09-20 14:17:20"
+        },
+        {
+            "name": "camspiers/porter-stemmer",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/camspiers/porter-stemmer.git",
+                "reference": "588088e9aaa6d81d711098cf60af2ef18b1a5798"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/camspiers/porter-stemmer/zipball/588088e9aaa6d81d711098cf60af2ef18b1a5798",
+                "reference": "588088e9aaa6d81d711098cf60af2ef18b1a5798",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Richard Heyes",
+                    "email": "support@rgraph.net"
+                }
+            ],
+            "description": "Porter Stemmer created by Richard Heyes",
+            "time": "2013-02-06 21:39:08"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.7",
@@ -2435,12 +2508,12 @@
             "version": "v2.7.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Console.git",
+                "url": "https://github.com/symfony/console.git",
                 "reference": "9ff9032151186bd66ecee727d728f1319f52d1d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/9ff9032151186bd66ecee727d728f1319f52d1d8",
+                "url": "https://api.github.com/repos/symfony/console/zipball/9ff9032151186bd66ecee727d728f1319f52d1d8",
                 "reference": "9ff9032151186bd66ecee727d728f1319f52d1d8",
                 "shasum": ""
             },
@@ -5786,7 +5859,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "zendframework/zend-developer-tools": 20,
-        "qu-modules/qu-ckeditor": 20
+        "qu-modules/qu-ckeditor": 20,
+        "aboustayyef/summarizer": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

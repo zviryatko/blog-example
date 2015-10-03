@@ -68,6 +68,54 @@ return array(
                     ),
                 ),
             ),
+            'admin' => array(
+                'child_routes' => array(
+                    'article' => array(
+                        'type' => 'literal',
+                        'options' => array(
+                            'route' => '/article',
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Article\Controller',
+                                'controller' => 'Admin',
+                                'action' => 'list',
+                                'headTitle' => 'Articles',
+                                'pageTitle' => 'Articles',
+                                'pageDescription' => 'List of all articles',
+                            ),
+                        ),
+                        'may_terminate' => true,
+                        'child_routes' => array(
+                            'list' => array(
+                                'type' => 'literal',
+                                'options' => array(
+                                    'route' => '/list',
+                                ),
+                            ),
+                            'view' => array(
+                                'type' => 'literal',
+                                'options' => array(
+                                    'route' => '/view',
+                                    'defaults' => array(
+                                        'action' => 'view',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    ),
+    'navigation' => array(
+        'admin' => array(
+            'index' => array(
+                'pages' => array(
+                    'article' => array(
+                        'label' => 'Articles',
+                        'route' => 'admin/article',
+                    ),
+                ),
+            ),
         ),
     ),
     'view_manager' => array(
@@ -92,6 +140,7 @@ return array(
     'controllers' => array(
         'factories' => array(
             'Article\Controller\Index' => 'Article\Controller\IndexControllerFactory',
+            'Article\Controller\Admin' => 'Article\Controller\AdminControllerFactory',
         ),
         'invokables' => array(
         ),
