@@ -19,18 +19,9 @@ return array(
                         'options' => array(
                             'route' => '/login',
                             'defaults' => array(
-                                'controller' => 'Admin',
+                                '__NAMESPACE__' => 'User\Controller',
+                                'controller' => 'Auth',
                                 'action' => 'login',
-                            ),
-                        ),
-                    ),
-                    'register' => array(
-                        'type' => 'literal',
-                        'options' => array(
-                            'route' => '/register',
-                            'defaults' => array(
-                                'controller' => 'Admin',
-                                'action' => 'register',
                             ),
                         ),
                     ),

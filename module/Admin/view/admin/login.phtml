@@ -2,43 +2,31 @@
 /**
  * @file
  *
+ * @var \User\Form\LoginForm $form
  */
+
+$form->prepare();
 ?>
 <p class="login-box-msg"><?php echo $this->translate('Sign in to start your session'); ?></p>
 
-<form action="<?php echo $this->url('admin'); ?>" method="post">
-    <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-    </div>
-    <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-    </div>
+<?php echo $this->form()->openTag($form->removeAttribute('class')); ?>
+    <?php echo $this->formRow($form->get('email')) ?>
+
+    <?php echo $this->formRow($form->get('password')) ?>
+
     <div class="row">
         <div class="col-xs-8">
             <div class="checkbox icheck">
-                <label><input type="checkbox"> <?php echo $this->translate('Remember Me'); ?></label>
+                <?php echo $this->formRow($form->get('remember_me'), 'append'); ?>
             </div>
         </div>
         <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat"><?php echo $this->translate('Sign In'); ?></button>
+            <?php echo $this->formRow($form->get('submit')->setAttribute('class', 'btn btn-primary btn-block btn-flat')); ?>
         </div>
     </div>
-</form>
 
-<div class="social-auth-links text-center">
-    <p><?php echo $this->translate('- OR -'); ?></p>
-    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
-        <i class="fa fa-facebook"></i> <?php echo $this->translate('Sign in using Facebook'); ?>
-    </a>
-    <a href="#" class="btn btn-block btn-social btn-google btn-flat">
-        <i class="fa fa-google-plus"></i> <?php echo $this->translate('Sign in using Google+'); ?>
-    </a>
-</div>
-
-<a href="#"><?php echo $this->translate('I forgot my password'); ?></a><br>
-<a href="<?php echo $this->url('admin/register'); ?>" class="text-center"><?php echo $this->translate('Register a new membership'); ?></a>
+    <?php echo $this->formRow($form->get('csrf')); ?>
+<?php echo $this->form()->closeTag(); ?>
 
 <?php
 $this->inlineScript()->captureStart();
@@ -55,4 +43,3 @@ echo <<<JS
 JS;
 $this->inlineScript()->captureEnd();
 ?>
-

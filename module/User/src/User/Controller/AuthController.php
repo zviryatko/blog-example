@@ -35,8 +35,9 @@ class AuthController extends AbstractController
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
+                $destination = trim($this->getRequest()->getQuery('destination', 'home'), '/');
 
-                return $this->redirect()->toRoute('home');
+                return $this->redirect()->toRoute($destination);
             }
         }
 

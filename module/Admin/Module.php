@@ -4,6 +4,7 @@ namespace Admin;
 use Zend\Authentication\AuthenticationServiceInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Stdlib\ResponseInterface;
+use Zend\View\Model\ModelInterface;
 
 class Module
 {
@@ -28,7 +29,7 @@ class Module
         $app = $event->getApplication();
         $serviceManager = $app->getServiceManager();
         $matches = $event->getRouteMatch();
-        if ($this->isMainLayout($matches->getMatchedRouteName())) {
+        if ($this->isAdminRoute($matches->getMatchedRouteName())) {
             /** @var AuthenticationServiceInterface $authenticationService */
             $authenticationService = $serviceManager->get('Zend\Authentication\AuthenticationService');
             if (!$authenticationService->hasIdentity()) {
@@ -37,7 +38,7 @@ class Module
                     array(
                         'name' => 'admin/login',
                         'query' => array(
-                            'destination' => $event->getRequest()->getRequestUri(),
+                            'destination' => trim($event->getRequest()->getRequestUri(), '/'),
                         ),
                     )
                 );
@@ -57,20 +58,31 @@ class Module
      */
     public function setLayout($event)
     {
+        $viewModel = $event->getViewModel();
         $matches = $event->getRouteMatch();
-        if (!$this->isMainLayout($matches->getMatchedRouteName())) {
+        $route = $matches->getMatchedRouteName();
+        if (!$this->isAdminRoute($route)) {
+            if ($route === 'admin/login') {
+                $viewModel->setTemplate('layout/admin-login');
+                foreach ($viewModel->getChildren() as $childView) {
+                    /** @var $childView ModelInterface */
+                    if ($childView->captureTo() === 'content') {
+                        $childView->setTemplate('admin/login');
+                    }
+                }
+
+            }
             // not a controller from this module
             return;
         }
 
         // Set the layout template
-        $viewModel = $event->getViewModel();
         $viewModel->setTemplate('layout/admin');
     }
 
-    protected function isMainLayout($route)
+    protected function isAdminRoute($route)
     {
-        return stripos($route, 'admin') === 0 && !in_array($route, array('admin/login', 'admin/register'));
+        return stripos($route, 'admin') === 0 && !in_array($route, array('admin/login'));
     }
 
     public function getConfig()

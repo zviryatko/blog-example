@@ -11,17 +11,5 @@ class AdminController extends AbstractController
     {
         return new ViewModel();
     }
-
-    public function loginAction()
-    {
-        $this->layout('layout/admin-login');
-        return new ViewModel();
-    }
-
-    public function registerAction()
-    {
-        $this->layout('layout/admin-login');
-        return new ViewModel();
-    }
 }
 

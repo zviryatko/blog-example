@@ -7,6 +7,7 @@
 namespace Application\Controller;
 
 use Application\Form\ConfirmForm;
+use Zend\Http\Request;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Exception;
 use Zend\Mvc\Controller\AbstractController as MvcController;
@@ -16,6 +17,7 @@ use Zend\Mvc\MvcEvent;
  * Class AbstractController
  *
  * @method ConfirmForm confirmForm($message, $confirm, $decline)
+ * @method Request getRequest()
  *
  * @package Application\Controller
  */

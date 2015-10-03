@@ -35,12 +35,19 @@ class LoginForm extends AbstractForm implements InputFilterProviderInterface
         parent::init();
 
         $this->setAttribute('class', 'form-inline');
+
         $this->add(
             array(
                 'name' => 'email',
+                'options' => array(
+                    'glyphicon' => 'envelope',
+                    'feedback' => TRUE,
+                ),
                 'attributes' => array(
                     'type' => 'text',
                     'placeholder' => $this->translate('Email'),
+                    'class' => 'form-control',
+                    'id' => 'email',
                 ),
             )
         );
@@ -49,9 +56,15 @@ class LoginForm extends AbstractForm implements InputFilterProviderInterface
             array(
                 'name' => 'password',
                 'type' => 'password',
+                'options' => array(
+                    'feedback' => TRUE,
+                    'glyphicon' => 'lock',
+                ),
                 'attributes' => array(
                     'type' => 'password',
                     'placeholder' => $this->translate('Password'),
+                    'class' => 'form-control',
+                    'id' => 'password',
                 ),
             )
         );
@@ -60,7 +73,20 @@ class LoginForm extends AbstractForm implements InputFilterProviderInterface
             array(
                 'name' => 'remember_me',
                 'type' => 'checkbox',
-                'label' => $this->translate('Remember me'),
+                'options' => array(
+                    'use_hidden_element' => false,
+                    'label' => $this->translate('Remember me'),
+                    'label_options' => array(
+                        'always_wrap' => true,
+                    ),
+                ),
+            )
+        );
+
+        $this->add(
+            array(
+                'name' => 'csrf',
+                'type' => 'csrf',
             )
         );
 
@@ -81,6 +107,12 @@ class LoginForm extends AbstractForm implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         return array(
+            'csrf' => array(
+                'required' => true,
+                'allow_empty' => false,
+                'continue_if_empty' => false,
+                'break_on_failure' => true,
+            ),
             'email' => array(
                 'required' => true,
                 'filters' => array(
@@ -97,11 +129,16 @@ class LoginForm extends AbstractForm implements InputFilterProviderInterface
                         'name' => 'Zend\Authentication\Validator\Authentication',
                         'options' => array(
                             'identity' => 'email',
+                            'credential' => 'password',
                             'service' => $this->getAuthService(),
                             'adapter' => $this->getAuthService()->getAdapter(),
                         ),
                     ),
                 ),
+            ),
+            'remember_me' => array(
+                'required' => false,
+                'allow_empty' => true,
             ),
         );
     }
