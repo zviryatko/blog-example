@@ -7,11 +7,11 @@ return array(
             'orm_default' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
-                    'host' => 'localhost',
-                    'port' => '3306',
-                    'user' => '',
-                    'password' => '',
-                    'dbname' => '',
+                    'host' => '__HOST__',
+                    'port' => '__PORT__',
+                    'user' => '__USER__',
+                    'password' => '__PASS__',
+                    'dbname' => '__NAME__',
                 ),
             ),
         ),

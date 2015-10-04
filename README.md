@@ -13,7 +13,7 @@ Features
 ToDo
 ----
 
-- [ ] Articles admin pages (list, add, edit)
+- [x] Articles admin pages (list, add, edit)
 - [ ] User admin pages (list, add, edit, view)
 - [ ] ACL, user roles and pemissions
 - [ ] Fix password hash generating
@@ -23,8 +23,22 @@ ToDo
 Installation
 ------------
 
-    git clone git@github.com:zviryatko/blog-example.git
+    git clone git@github.com:zviryatko/blog-example.git blog-example
     cd blog-example
+
+#### Phing
+
+Install phing with git support:
+
+    composer global require phing/phing
+    composer global require pear/versioncontrol_git:dev-master
+    
+And install via:
+
+    phing install
+
+#### By-Hand
+
     composer update
     mysql -u root -p -e "CREATE DATABASE zf2_blog CHARACTER SET utf8 COLLATE utf8_general_ci;"
     cp config/autoload/doctrine.orm.local.php.dist config/autoload/doctrine.orm.local.php
