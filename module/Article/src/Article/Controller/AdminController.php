@@ -26,7 +26,7 @@ class AdminController extends AbstractController
         $this->setRepository($objectManager->getRepository('Article\Entity\Article'));
     }
 
-    public function listAction()
+    public function indexAction()
     {
         // todo: paginator require.
         $articles = $this->getRepository()->findAll();
@@ -62,16 +62,6 @@ class AdminController extends AbstractController
         return $model;
     }
 
-    /**
-     * @param Article $article
-     *
-     * @return ViewModel
-     */
-    public function viewAction(Article $article)
-    {
-        return new ViewModel(array('article' => $article));
-    }
-
     public function editAction(Article $article)
     {
         /** @var \Article\Form\AddForm $form */
@@ -82,7 +72,9 @@ class AdminController extends AbstractController
             $actions = $request->getPost('actions');
             // Process delete.
             if (!empty($actions['delete'])) {
-                return $this->redirect()->toRoute('article/delete', array('id' => $article->getId()));
+                return $this->redirect()
+                    ->setBypassDestination(true)
+                    ->toRoute('admin/article/delete', array('id' => $article->getId()));
             }
 
             $post = array_merge_recursive(
@@ -98,7 +90,7 @@ class AdminController extends AbstractController
 
                 $this->flashMessenger()->addSuccessMessage('Article updated!');
 
-                return $this->redirect()->toRoute('article/view', array('id' => $article->getId()));
+                return $this->redirect()->toRoute('admin/article');
             }
         }
 
@@ -110,23 +102,21 @@ class AdminController extends AbstractController
 
     public function deleteAction(Article $article)
     {
-        $form = $this->confirmForm('Are your really wont to delete this article?', 'Delete', 'Cancel');
+        $form = $this->confirmForm('Are you really want to delete this article?', 'Delete', 'Cancel');
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                if (!empty($data['decline'])) {
-                    return $this->redirect()->toRoute('article/view', array('id' => $article->getId()));
-                }
-                elseif (!empty($data['confirm'])) {
+
+                if (!empty($data['confirm'])) {
                     $objectManager = $this->getObjectManager();
                     $objectManager->remove($article);
                     $objectManager->flush();
 
                     $this->flashMessenger()->addInfoMessage('Article deleted!');
-
-                    return $this->redirect()->toRoute('article');
                 }
+
+                return $this->redirect()->toRoute('admin/article');
             }
         }
 

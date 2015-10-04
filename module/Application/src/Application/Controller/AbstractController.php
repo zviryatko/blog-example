@@ -6,6 +6,7 @@
 
 namespace Application\Controller;
 
+use Application\Controller\Plugin\Redirect;
 use Application\Form\ConfirmForm;
 use Zend\Http\Request;
 use Zend\Http\Response as HttpResponse;
@@ -18,6 +19,7 @@ use Zend\Mvc\MvcEvent;
  *
  * @method ConfirmForm confirmForm($message, $confirm, $decline)
  * @method Request getRequest()
+ * @method Redirect redirect()
  *
  * @package Application\Controller
  */

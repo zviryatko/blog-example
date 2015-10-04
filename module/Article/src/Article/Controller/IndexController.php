@@ -33,32 +33,6 @@ class IndexController extends AbstractController
         return new ViewModel(array('articles' => $articles));
     }
 
-    public function addAction()
-    {
-        /** @var \Article\Form\AddForm $form */
-        $form = $this->getServiceLocator()->get('FormElementManager')->get('Article\Form\AddForm');
-        $article = new Article();
-        $form->bind($article);
-        if ($this->getRequest()->isPost()) {
-            $form->setData($this->getRequest()->getPost());
-            if ($form->isValid()) {
-
-                $objectManager = $this->getObjectManager();
-                $objectManager->persist($article);
-                $objectManager->flush();
-
-                $this->flashMessenger()->addSuccessMessage('Article added!');
-
-                return $this->redirect()->toRoute('article/view', array('id' => $article->getId()));
-            }
-        }
-
-        $model = new ViewModel(array('form' => $form));
-        $model->setTemplate('basic/form.phtml');
-
-        return $model;
-    }
-
     /**
      * @param Article $article
      *
@@ -67,70 +41,6 @@ class IndexController extends AbstractController
     public function viewAction(Article $article)
     {
         return new ViewModel(array('article' => $article));
-    }
-
-    public function editAction(Article $article)
-    {
-        /** @var \Article\Form\AddForm $form */
-        $form = $this->getServiceLocator()->get('FormElementManager')->get('Article\Form\EditForm');
-        $request = $this->getRequest();
-        $form->bind($article);
-        if ($request->isPost()) {
-            $actions = $request->getPost('actions');
-            // Process delete.
-            if (!empty($actions['delete'])) {
-                return $this->redirect()->toRoute('article/delete', array('id' => $article->getId()));
-            }
-
-            $post = array_merge_recursive(
-                $request->getPost()->toArray(),
-                $request->getFiles()->toArray()
-            );
-
-            $form->setData($post);
-            if ($form->isValid()) {
-                $objectManager = $this->getObjectManager();
-                $objectManager->persist($article);
-                $objectManager->flush();
-
-                $this->flashMessenger()->addSuccessMessage('Article updated!');
-
-                return $this->redirect()->toRoute('article/view', array('id' => $article->getId()));
-            }
-        }
-
-        $model = new ViewModel(array('form' => $form));
-        $model->setTemplate('basic/form.phtml');
-
-        return $model;
-    }
-
-    public function deleteAction(Article $article)
-    {
-        $form = $this->confirmForm('Are your really wont to delete this article?', 'Delete', 'Cancel');
-        if ($this->getRequest()->isPost()) {
-            $form->setData($this->getRequest()->getPost());
-            if ($form->isValid()) {
-                $data = $form->getData();
-                if (!empty($data['decline'])) {
-                    return $this->redirect()->toRoute('article/view', array('id' => $article->getId()));
-                }
-                elseif (!empty($data['confirm'])) {
-                    $objectManager = $this->getObjectManager();
-                    $objectManager->remove($article);
-                    $objectManager->flush();
-
-                    $this->flashMessenger()->addInfoMessage('Article deleted!');
-
-                    return $this->redirect()->toRoute('article');
-                }
-            }
-        }
-
-        $model = new ViewModel(array('form' => $form));
-        $model->setTemplate('basic/confirm.phtml');
-
-        return $model;
     }
 
     /**

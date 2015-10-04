@@ -32,7 +32,14 @@ class EntityRouter extends Segment implements ServiceLocatorAwareInterface
         if ($routeMatch instanceof RouteMatch) {
             $entityName = $routeMatch->getParam('entity');
             $params = $routeMatch->getParams();
-            unset($params['entity'], $params['controller'], $params['action']);
+            unset(
+                $params['entity'],
+                $params['controller'],
+                $params['action'],
+                $params['headTitle'],
+                $params['pageTitle'],
+                $params['pageDescription']
+            );
             /** @var EntityManager $objectManager */
             $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
             $objectRepository = $objectManager->getRepository($entityName);

@@ -38,20 +38,36 @@
 
                     <tbody>
                     <?php foreach ($articles as $article): ?>
-                        <tr>
+                        <tr class="lead">
                             <td><?php echo $this->escapeHtml($article->getId()); ?></td>
                             <td>
-                                <a href="<?php echo $this->url('admin/article/view', array('id' => $article->getId())); ?>">
-                                    <img width="80px" src="<?php echo $this->serverUrl() . '/files/' . $article->getThumbnail()->getFilename(); ?>"/>
+                                <?php if ($article->hasThumbnail()): ?>
+                                <a href="<?php echo $this->url('admin/article/edit', array('id' => $article->getId())); ?>">
+                                    <img height="70px" src="<?php echo $this->serverUrl() . '/files/' . $article->getThumbnail()->getFilename(); ?>"/>
                                 </a>
+                                <?php endif; ?>
                             </td>
                             <td>
-                                <a href="<?php echo $this->url('admin/article/view', array('id' => $article->getId())); ?>">
-                                    <?php echo $this->escapeHtml($article->getTitle()); ?>
-                                </a>
+                                <p>
+                                    <a href="<?php echo $this->url('admin/article/edit', array('id' => $article->getId())); ?>">
+                                        <?php echo $this->escapeHtml($article->getTitle()); ?>
+                                    </a>
+                                </p>
+
+                                <p class="description">
+                                    <a class="btn btn-warning btn-xs"  href="<?php echo $this->url('admin/article/edit', array('id' => $article->getId()), array('query' => array('destination' => $this->url()))); ?>">
+                                        <i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>
+                                    </a>
+                                    <a class="btn btn-danger btn-xs" href="<?php echo $this->url('admin/article/delete', array('id' => $article->getId()), array('query' => array('destination' => $this->url()))); ?>">
+                                        <i class="fa fa-trash-o"></i> <?php echo $this->translate('Delete'); ?>
+                                    </a>
+                                    <a class="btn btn-primary btn-xs" href="<?php echo $this->url('article/view', array('id' => $article->getId())); ?>">
+                                        <i class="fa fa-eye"></i> <?php echo $this->translate('View'); ?>
+                                    </a>
+                                </p>
                             </td>
                             <td>
-                                <a href="<?php echo $this->url('admin/article/view', array('id' => $article->getAuthor()->getId())); ?>">
+                                <a href="<?php echo $this->url('article/view', array('id' => $article->getAuthor()->getId())); ?>">
                                     <?php echo $this->escapeHtml($article->getAuthor()->getFullName()); ?>
                                 </a>
                             </td>

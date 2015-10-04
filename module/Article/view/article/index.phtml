@@ -11,9 +11,11 @@
     <div class="row">
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
+                <?php if ($article->hasThumbnail()): ?>
                 <a href="<?php print $this->url('article/view', array('id' => $article->getId())); ?>">
                     <img src="<?php print $this->serverUrl() . '/files/' . $article->getThumbnail()->getFilename(); ?>" />
                 </a>
+                <?php endif; ?>
 
                 <div class="caption">
                     <h3>

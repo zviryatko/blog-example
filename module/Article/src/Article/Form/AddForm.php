@@ -47,7 +47,7 @@ class AddForm extends AbstractForm implements InputFilterProviderInterface
                 'options' => array(
                     'label' => $this->translate('Title'),
                     'label_attributes' => array(
-                        'class' => 'col-sm-2 control-label',
+                        'class' => 'col-sm-1 control-label',
                     ),
                     'wrapper_class' => 'col-sm-10',
                     'help' => $this->translate('Article title'),
@@ -66,7 +66,7 @@ class AddForm extends AbstractForm implements InputFilterProviderInterface
                 'options' => array(
                     'label' => $this->translate('Thumbnail'),
                     'label_attributes' => array(
-                        'class' => 'col-sm-2 control-label',
+                        'class' => 'col-sm-1 control-label',
                     ),
                     'wrapper_class' => 'col-sm-10',
                     'help' => $this->translate('Article main image'),
@@ -85,7 +85,7 @@ class AddForm extends AbstractForm implements InputFilterProviderInterface
                 'options' => array(
                     'label' => $this->translate('Content'),
                     'label_attributes' => array(
-                        'class' => 'col-sm-2 control-label',
+                        'class' => 'col-sm-1 control-label',
                     ),
                     'wrapper_class' => 'col-sm-10',
                     'help' => $this->translate('Article main content'),
@@ -104,9 +104,9 @@ class AddForm extends AbstractForm implements InputFilterProviderInterface
                 'options' => array(
                     'label' => $this->translate('Author'),
                     'label_attributes' => array(
-                        'class' => 'col-sm-2 control-label',
+                        'class' => 'col-sm-1 control-label',
                     ),
-                    'wrapper_class' => 'col-sm-2',
+                    'wrapper_class' => 'col-sm-1',
                     'object_manager' => $this->getObjectManager(),
                     'target_class' => 'User\Entity\User',
                     'property' => 'fullName',
@@ -124,14 +124,16 @@ class AddForm extends AbstractForm implements InputFilterProviderInterface
                     'name' => 'submit',
                     'type' => 'submit',
                     'options' => array(
-                        'wrapper_class' => '',
+                        'disable_group_wrapper' => true,
                     ),
                     'attributes' => array(
                         'value' => $this->translate('Save'),
-                        'class' => 'btn btn-primary btn-lg',
+                        'class' => 'btn btn-primary',
                     ),
                 )
-            )->setAttribute('class', 'col-sm-offset-2 col-sm-10 form-inline')
+            )
+                ->setAttribute('class', 'form-group')
+                ->setOption('wrapper_class', 'col-sm-offset-1 col-sm-10 btn-group btn-group-lg')
         );
     }
 

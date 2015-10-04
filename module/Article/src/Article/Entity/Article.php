@@ -162,6 +162,14 @@ class Article
     }
 
     /**
+     * @return bool
+     */
+    public function hasThumbnail()
+    {
+        return !is_null($this->thumbnail);
+    }
+
+    /**
      * @return File
      */
     public function getThumbnail()

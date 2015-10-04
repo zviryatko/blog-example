@@ -11,9 +11,11 @@ $this->headTitle($this->escapeHtml($article->getTitle()));
 <h1><?php print $this->escapeHtml($article->getTitle()); ?></h1>
 
 <div class="thumbnail">
+    <?php if ($article->hasThumbnail()): ?>
     <a href="<?php print $this->serverUrl() . '/files/' . $article->getThumbnail()->getFilename(); ?>">
         <img src="<?php print $this->serverUrl() . '/files/' . $article->getThumbnail()->getFilename(); ?>" />
     </a>
+    <?php endif; ?>
 </div>
 
 <?php print $article->getText(); ?>
@@ -21,6 +23,13 @@ $this->headTitle($this->escapeHtml($article->getTitle()));
 <p class="metadata">
     <?php printf($this->translate('Posted by %s | on %s'), $this->username($article->getAuthor()), $this->articleMetadata($article)); ?>
     <?php if ($this->identity()): ?>
-        | <a class="warning" role="button" href="<?php print $this->url('article/edit', array('id' => $article->getId())); ?>"><?php print $this->translate('Edit'); ?></a>
+    <span class="btn-group btn-group-xs">
+        <a class="btn btn-warning"  href="<?php echo $this->url('admin/article/edit', array('id' => $article->getId()), array('query' => array('destination' => $this->url(null, array('id' => $article->getId()))))); ?>">
+            <i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>
+        </a>
+        <a class="btn btn-danger" href="<?php echo $this->url('admin/article/delete', array('id' => $article->getId()), array('query' => array('destination' => $this->url('article')))); ?>">
+            <i class="fa fa-trash-o"></i> <?php echo $this->translate('Delete'); ?>
+        </a>
+    </span>
     <?php endif; ?>
 </p>

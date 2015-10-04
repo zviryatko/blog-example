@@ -14,16 +14,6 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'add' => array(
-                        'type' => 'literal',
-                        'options' => array(
-                            'route' => '/add',
-                            'defaults' => array(
-                                'controller' => 'Index',
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
                     'view' => array(
                         'type' => 'entity',
                         'options' => array(
@@ -34,34 +24,6 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Index',
                                 'action' => 'view',
-                                'entity' => 'Article\Entity\Article',
-                            ),
-                        ),
-                    ),
-                    'edit' => array(
-                        'type' => 'entity',
-                        'options' => array(
-                            'route' => '/edit/:id',
-                            'constraints' => array(
-                                'id' => '[0-9]+'
-                            ),
-                            'defaults' => array(
-                                'controller' => 'Index',
-                                'action' => 'edit',
-                                'entity' => 'Article\Entity\Article',
-                            ),
-                        ),
-                    ),
-                    'delete' => array(
-                        'type' => 'entity',
-                        'options' => array(
-                            'route' => '/delete/:id',
-                            'constraints' => array(
-                                'id' => '[0-9]+'
-                            ),
-                            'defaults' => array(
-                                'controller' => 'Index',
-                                'action' => 'delete',
                                 'entity' => 'Article\Entity\Article',
                             ),
                         ),
@@ -77,7 +39,7 @@ return array(
                             'defaults' => array(
                                 '__NAMESPACE__' => 'Article\Controller',
                                 'controller' => 'Admin',
-                                'action' => 'list',
+                                'action' => 'index',
                                 'headTitle' => 'Articles',
                                 'pageTitle' => 'Articles',
                                 'pageDescription' => 'List of all articles',
@@ -85,18 +47,52 @@ return array(
                         ),
                         'may_terminate' => true,
                         'child_routes' => array(
-                            'list' => array(
+                            'index' => array(
                                 'type' => 'literal',
                                 'options' => array(
-                                    'route' => '/list',
+                                    'route' => '/index',
                                 ),
                             ),
-                            'view' => array(
+                            'add' => array(
                                 'type' => 'literal',
                                 'options' => array(
-                                    'route' => '/view',
+                                    'route' => '/add',
                                     'defaults' => array(
-                                        'action' => 'view',
+                                        'action' => 'add',
+                                        'headTitle' => 'Add article',
+                                        'pageTitle' => 'Add article',
+                                    ),
+                                ),
+                            ),
+                            'edit' => array(
+                                'type' => 'entity',
+                                'options' => array(
+                                    'route' => '/edit/:id',
+                                    'constraints' => array(
+                                        'id' => '[0-9]+'
+                                    ),
+                                    'defaults' => array(
+                                        'action' => 'edit',
+                                        'entity' => 'Article\Entity\Article',
+                                        'headTitle' => 'Edit article',
+                                        'pageTitle' => 'Edit article',
+                                        'pageDescription' => '',
+                                    ),
+                                ),
+                            ),
+                            'delete' => array(
+                                'type' => 'entity',
+                                'options' => array(
+                                    'route' => '/delete/:id',
+                                    'constraints' => array(
+                                        'id' => '[0-9]+'
+                                    ),
+                                    'defaults' => array(
+                                        'action' => 'delete',
+                                        'entity' => 'Article\Entity\Article',
+                                        'headTitle' => 'Delete article',
+                                        'pageTitle' => '',
+                                        'pageDescription' => '',
                                     ),
                                 ),
                             ),
@@ -108,11 +104,18 @@ return array(
     ),
     'navigation' => array(
         'admin' => array(
-            'index' => array(
+            'article' => array(
+                'label' => 'Articles',
+                'route' => 'admin/article',
+                'icon' => 'pencil',
                 'pages' => array(
-                    'article' => array(
-                        'label' => 'Articles',
+                    'index' => array(
+                        'label' => 'List',
                         'route' => 'admin/article',
+                    ),
+                    'new' => array(
+                        'label' => 'Add new',
+                        'route' => 'admin/article/add',
                     ),
                 ),
             ),

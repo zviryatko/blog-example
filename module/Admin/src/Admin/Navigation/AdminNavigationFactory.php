@@ -20,15 +20,4 @@ class AdminNavigationFactory extends AbstractNavigationFactory
     {
         return 'admin';
     }
-
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return \Zend\Navigation\Navigation
-     */
-//    public function createService(ServiceLocatorInterface $serviceLocator)
-//    {
-//        /** @var RouteInterface $router */
-//        $router = $serviceLocator->get('Router');
-//        return new Navigation($router);
-//    }
 }

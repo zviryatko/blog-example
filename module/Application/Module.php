@@ -58,6 +58,9 @@ class Module
         $app = $event->getApplication();
         $serviceManager = $app->getServiceManager();
         $route = $event->getRouteMatch();
+        if (null === $route) {
+            return;
+        }
         /** @var HelperPluginManager $viewHelperManager */
         $viewHelperManager = $serviceManager->get('viewhelpermanager');
 

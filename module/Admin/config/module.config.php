@@ -55,6 +55,7 @@ return array(
     'navigation_helpers' => array(
         'invokables' => array(
             'adminBreadcrumbs' => 'Admin\View\Helper\Navigation\AdminBreadcrumbs',
+            'adminSidebarMenu' => 'Admin\View\Helper\Navigation\AdminSidebarMenu',
         ),
     ),
     'view_manager' => array(
@@ -68,16 +69,16 @@ return array(
     ),
     'navigation' => array(
         'admin' => array(
+            'header' => array(
+                'label' => 'Main navigation',
+                'class' => 'header text-uppercase',
+                'uri' => '',
+            ),
             'index' => array(
                 'label' => 'Admin',
                 'route' => 'admin',
                 'icon' => 'dashboard',
-                'params' => array(
-                    'action' => 'index'
-                ),
-                'pages' => array(
-
-                ),
+                'class' => 'admin',
             ),
         ),
     ),

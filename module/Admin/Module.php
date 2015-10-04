@@ -38,7 +38,7 @@ class Module
                     array(
                         'name' => 'admin/login',
                         'query' => array(
-                            'destination' => trim($event->getRequest()->getRequestUri(), '/'),
+                            'destination' => $event->getRequest()->getRequestUri(),
                         ),
                     )
                 );

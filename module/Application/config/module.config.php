@@ -90,7 +90,8 @@ return array(
     'controller_plugins' => array(
         'invokables' => array(
             'confirm_form' => 'Application\Controller\Plugin\ConfirmFormPlugin',
-        )
+            'redirect' => 'Application\Controller\Plugin\Redirect',
+        ),
     ),
     'navigation_helpers' => array(
         'invokables' => array(
@@ -123,6 +124,7 @@ return array(
         'invokables' => array(
             'formimagefile' => 'Application\View\Helper\FormImageFile',
             'formelement' => 'Application\View\Helper\FormElement',
+            'formcollection' => 'Application\View\Helper\FormCollection',
             'striptags' => 'Application\View\Helper\StripTags',
             'summarize' => 'Application\View\Helper\Summarize',
             'pageTitle' => 'Application\View\Helper\PageTitle',
