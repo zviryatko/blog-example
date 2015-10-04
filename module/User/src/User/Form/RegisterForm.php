@@ -45,6 +45,16 @@ class RegisterForm extends AbstractForm implements InputFilterProviderInterface
 
         $this->add(
             array(
+                'name' => 'company',
+                'type' => 'text',
+                'options' => array(
+                    'label' => $this->translate('Company'),
+                ),
+            )
+        );
+
+        $this->add(
+            array(
                 'name' => 'email',
                 'options' => array(
                     'label' => $this->translate('Email'),

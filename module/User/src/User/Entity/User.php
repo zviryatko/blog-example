@@ -52,6 +52,11 @@ class User
      */
     protected $created;
 
+    public function __construct()
+    {
+        $this->setCreated(new \DateTime());
+    }
+
     /**
      * @return mixed
      */
