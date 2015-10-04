@@ -3,6 +3,14 @@ ZF2+Doctrine example Application
 
 Example of ZF2 + Doctrine application.
 
+[Demo](http://zf2-demo.makeyoulivebetter.org.ua/admin/login)
+
+User: `jane.doe@makeyoulivebetter.org.ua`
+
+Pass: `demo`
+
+**Note:** Application active development.
+
 Features
 --------
 
