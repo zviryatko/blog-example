@@ -64,10 +64,10 @@ class User extends \User\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'fullName', 'email', 'password');
+            return array('__isInitialized__', 'id', 'fullName', 'company', 'email', 'password', 'created');
         }
 
-        return array('__isInitialized__', 'id', 'fullName', 'email', 'password');
+        return array('__isInitialized__', 'id', 'fullName', 'company', 'email', 'password', 'created');
     }
 
     /**
@@ -213,6 +213,28 @@ class User extends \User\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getCompany()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompany', array());
+
+        return parent::getCompany();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setCompany($company)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCompany', array($company));
+
+        return parent::setCompany($company);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setFullName($fullName)
     {
 
@@ -263,6 +285,28 @@ class User extends \User\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPassword', array($password));
 
         return parent::setPassword($password);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCreated()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreated', array());
+
+        return parent::getCreated();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setCreated(\DateTime $created)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCreated', array($created));
+
+        return parent::setCreated($created);
     }
 
 }

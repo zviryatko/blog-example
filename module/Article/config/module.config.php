@@ -112,10 +112,12 @@ return array(
                     'index' => array(
                         'label' => 'List',
                         'route' => 'admin/article',
+                        'icon' => 'th-list',
                     ),
                     'new' => array(
                         'label' => 'Add new',
                         'route' => 'admin/article/add',
+                        'icon' => 'plus',
                     ),
                 ),
             ),

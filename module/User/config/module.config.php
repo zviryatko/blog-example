@@ -70,6 +70,66 @@ return array(
                     ),
                 ),
             ),
+            'admin' => array(
+                'child_routes' => array(
+                    'user' => array(
+                        'type' => 'literal',
+                        'options' => array(
+                            'route' => '/user',
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'User\Controller',
+                                'controller' => 'Admin',
+                                'action' => 'index',
+                                'headTitle' => 'Users',
+                                'pageTitle' => 'Users',
+                            ),
+                        ),
+                        'may_terminate' => true,
+                        'child_routes' => array(
+                            'index' => array(
+                                'type' => 'literal',
+                                'options' => array(
+                                    'route' => '/index',
+                                ),
+                            ),
+                            'add' => array(
+                                'type' => 'literal',
+                                'options' => array(
+                                    'route' => '/add',
+                                ),
+                            ),
+                            'edit' => array(
+                                'type' => 'entity',
+                                'options' => array(
+                                    'route' => '/edit/:id',
+                                    'constraints' => array(
+                                        'id' => '[0-9]+'
+                                    ),
+                                    'defaults' => array(
+                                        'action' => 'edit',
+                                        'entity' => 'User\Entity\User',
+                                        'headTitle' => 'Edit profile',
+                                        'pageTitle' => 'Edit profile',
+                                    ),
+                                ),
+                            ),
+                            'view' => array(
+                                'type' => 'entity',
+                                'options' => array(
+                                    'route' => '/view/:id',
+                                    'constraints' => array(
+                                        'id' => '[0-9]+'
+                                    ),
+                                    'defaults' => array(
+                                        'action' => 'edit',
+                                        'entity' => 'User\Entity\User',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         ),
     ),
     'view_manager' => array(
@@ -83,7 +143,8 @@ return array(
     ),
     'view_helpers' => array(
         'invokables' => array(
-            'username' => 'User\View\Helper\UsernameHelper',
+            'username' => 'User\View\Helper\Username',
+            'userpicture' => 'User\View\Helper\UserPicture',
         ),
     ),
     'service_manager' => array(
@@ -95,10 +156,9 @@ return array(
     ),
     'controllers' => array(
         'factories' => array(
+            'User\Controller\Admin' => 'User\Controller\AdminControllerFactory',
             'User\Controller\Index' => 'User\Controller\IndexControllerFactory',
-        ),
-        'invokables' => array(
-            'User\Controller\Auth' => 'User\Controller\AuthController',
+            'User\Controller\Auth' => 'User\Controller\AuthControllerFactory',
         ),
     ),
     'controller_plugins' => array(
@@ -140,6 +200,25 @@ return array(
         ),
     ),
     'navigation' => array(
+        'admin' => array(
+            'user' => array(
+                'label' => 'Users',
+                'route' => 'admin/user',
+                'icon' => 'users',
+                'pages' => array(
+                    'index' => array(
+                        'label' => 'List',
+                        'route' => 'admin/user',
+                        'icon' => 'th-list',
+                    ),
+                    'new' => array(
+                        'label' => 'Add new',
+                        'route' => 'admin/user/add',
+                        'icon' => 'user-plus',
+                    ),
+                ),
+            ),
+        ),
         'user' => array(
             array(
                 'label' => 'Login',

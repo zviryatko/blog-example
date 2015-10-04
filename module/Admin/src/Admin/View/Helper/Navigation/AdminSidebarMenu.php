@@ -203,6 +203,7 @@ class AdminSidebarMenu extends Menu
             $escaper = $this->view->plugin('escapeHtml');
             $label = $escaper($label);
         }
+        $label = '<span>' . $label . '</span>';
 
         if (isset($page->icon)) {
             $attribs = array(

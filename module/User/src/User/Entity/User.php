@@ -31,6 +31,12 @@ class User
      * @ORM\Column(type="string")
      * @var string
      */
+    protected $company;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     protected $email;
 
     /**
@@ -38,6 +44,13 @@ class User
      * @var string
      */
     protected $password;
+
+    /**
+     *
+     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
+     */
+    protected $created;
 
     /**
      * @return mixed
@@ -65,6 +78,26 @@ class User
     public function getFullName()
     {
         return $this->fullName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param string $company
+     *
+     * @return User
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+
+        return $this;
     }
 
     /**
@@ -115,6 +148,26 @@ class User
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param \DateTime $created
+     *
+     * @return User
+     */
+    public function setCreated(\DateTime $created)
+    {
+        $this->created = $created;
 
         return $this;
     }

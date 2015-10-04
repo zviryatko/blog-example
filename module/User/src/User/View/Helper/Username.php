@@ -9,7 +9,7 @@ namespace User\View\Helper;
 use User\Entity\User;
 use Zend\View\Helper\AbstractHelper;
 
-class UsernameHelper extends AbstractHelper
+class Username extends AbstractHelper
 {
     public function __invoke(User $user)
     {

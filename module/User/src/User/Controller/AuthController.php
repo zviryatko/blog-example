@@ -9,6 +9,7 @@ namespace User\Controller;
 use Application\Controller\AbstractController;
 use User\Entity\User;
 use User\Service\UserService;
+use Zend\Authentication\AuthenticationServiceInterface;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -18,9 +19,14 @@ use Zend\View\Model\ViewModel;
  */
 class AuthController extends AbstractController
 {
+    /**
+     * @var AuthenticationServiceInterface
+     */
+    protected $authService;
 
-    public function __construct()
+    public function __construct(AuthenticationServiceInterface $authenticationService)
     {
+        $this->setAuthService($authenticationService);
     }
 
     public function loginAction()
@@ -76,5 +82,35 @@ class AuthController extends AbstractController
         $model->setTemplate('basic/form.phtml');
 
         return $model;
+    }
+
+    public function logoutAction()
+    {
+        $identity = $this->identity();
+        if ($identity instanceof User) {
+            $this->getAuthService()->clearIdentity();
+        }
+
+        return $this->redirect()->toRoute('home');
+    }
+
+    /**
+     * @return AuthenticationServiceInterface
+     */
+    public function getAuthService()
+    {
+        return $this->authService;
+    }
+
+    /**
+     * @param AuthenticationServiceInterface $authService
+     *
+     * @return self
+     */
+    public function setAuthService($authService)
+    {
+        $this->authService = $authService;
+
+        return $this;
     }
 }
