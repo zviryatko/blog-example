@@ -98,31 +98,33 @@ return array(
                                     'route' => '/add',
                                 ),
                             ),
-                            'edit' => array(
-                                'type' => 'entity',
-                                'options' => array(
-                                    'route' => '/edit/:id',
-                                    'constraints' => array(
-                                        'id' => '[0-9]+'
-                                    ),
-                                    'defaults' => array(
-                                        'action' => 'edit',
-                                        'entity' => 'User\Entity\User',
-                                        'headTitle' => 'Edit profile',
-                                        'pageTitle' => 'Edit profile',
-                                    ),
-                                ),
-                            ),
                             'view' => array(
                                 'type' => 'entity',
                                 'options' => array(
-                                    'route' => '/view/:id',
+                                    'route' => '/:id',
                                     'constraints' => array(
                                         'id' => '[0-9]+'
                                     ),
                                     'defaults' => array(
-                                        'action' => 'edit',
+                                        'action' => 'view',
                                         'entity' => 'User\Entity\User',
+                                        'headTitle' => 'User profile',
+                                        'pageTitle' => 'User profile',
+                                    ),
+                                ),
+                                'may_terminate' => true,
+                                'child_routes' => array(
+                                    'edit' => array(
+                                        'type' => 'entity',
+                                        'options' => array(
+                                            'route' => '/edit',
+                                            'defaults' => array(
+                                                'action' => 'edit',
+                                                'entity' => 'User\Entity\User',
+                                                'headTitle' => 'Edit profile',
+                                                'pageTitle' => 'Edit profile',
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ),
