@@ -4,6 +4,7 @@ namespace Article\Controller;
 
 use Application\Controller\AbstractController;
 use Article\Entity\Article;
+use Article\Form\AddForm;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Zend\View\Model\ViewModel;
@@ -41,19 +42,10 @@ class AdminController extends AbstractController
         /** @var \Article\Form\AddForm $form */
         $form = $this->getServiceLocator()->get('FormElementManager')->get('Article\Form\AddForm');
         $article = new Article();
-        $form->bind($article);
-        if ($this->getRequest()->isPost()) {
-            $form->setData($this->getRequest()->getPost());
-            if ($form->isValid()) {
-
-                $objectManager = $this->getObjectManager();
-                $objectManager->persist($article);
-                $objectManager->flush();
-
-                $this->flashMessenger()->addSuccessMessage('Article added!');
-
-                return $this->redirect()->toRoute('article/view', array('id' => $article->getId()));
-            }
+        $this->processArticleForm($form, $article);
+        if ($form->hasValidated() && $form->isValid()) {
+            $this->flashMessenger()->addSuccessMessage('Article updated!');
+            return $this->redirect()->toRoute('admin/article');
         }
 
         $model = new ViewModel(array('form' => $form));
@@ -66,32 +58,10 @@ class AdminController extends AbstractController
     {
         /** @var \Article\Form\AddForm $form */
         $form = $this->getServiceLocator()->get('FormElementManager')->get('Article\Form\EditForm');
-        $request = $this->getRequest();
-        $form->bind($article);
-        if ($request->isPost()) {
-            $actions = $request->getPost('actions');
-            // Process delete.
-            if (!empty($actions['delete'])) {
-                return $this->redirect()
-                    ->setBypassDestination(true)
-                    ->toRoute('admin/article/delete', array('id' => $article->getId()));
-            }
-
-            $post = array_merge_recursive(
-                $request->getPost()->toArray(),
-                $request->getFiles()->toArray()
-            );
-
-            $form->setData($post);
-            if ($form->isValid()) {
-                $objectManager = $this->getObjectManager();
-                $objectManager->persist($article);
-                $objectManager->flush();
-
-                $this->flashMessenger()->addSuccessMessage('Article updated!');
-
-                return $this->redirect()->toRoute('admin/article');
-            }
+        $this->processArticleForm($form, $article);
+        if ($form->hasValidated() && $form->isValid()) {
+            $this->flashMessenger()->addSuccessMessage('Article updated!');
+            return $this->redirect()->toRoute('admin/article');
         }
 
         $model = new ViewModel(array('form' => $form));
@@ -124,6 +94,33 @@ class AdminController extends AbstractController
         $model->setTemplate('basic/confirm.phtml');
 
         return $model;
+    }
+
+    protected function processArticleForm(AddForm $form, Article $article)
+    {
+        $request = $this->getRequest();
+        $form->bind($article);
+        if ($request->isPost()) {
+            $actions = $request->getPost('actions');
+            // Process delete.
+            if (!empty($actions['delete']) && $article->getId()) {
+                return $this->redirect()
+                    ->setBypassDestination(true)
+                    ->toRoute('admin/article/delete', array('id' => $article->getId()));
+            }
+
+            $post = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray()
+            );
+
+            $form->setData($post);
+            if ($form->isValid()) {
+                $objectManager = $this->getObjectManager();
+                $objectManager->persist($article);
+                $objectManager->flush();
+            }
+        }
     }
 
     /**
