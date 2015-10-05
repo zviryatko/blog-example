@@ -1,0 +1,13 @@
+/**
+ * @version: dev
+ * @author: MohamedAlaa http://bootsnipp.com/MohamedAlaa
+ * @see http://bootsnipp.com/snippets/featured/bootstrap-drag-and-drop-upload
+ */
+
+form.dragndrop-processed {
+    padding: 20px 0 0;
+}
+form.dragndrop-processed.drop {
+    border: dashed #ccc;
+    opacity: 0.5;
+}

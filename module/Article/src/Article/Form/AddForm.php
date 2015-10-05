@@ -73,7 +73,7 @@ class AddForm extends AbstractForm implements InputFilterProviderInterface
                 ),
                 'attributes' => array(
                     'id' => 'thumbnail',
-                    'class' => '',
+                    'class' => 'js-upload-files',
                 ),
             )
         );

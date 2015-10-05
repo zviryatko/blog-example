@@ -13,6 +13,7 @@
 
     <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
         ->prependStylesheet($this->basePath('css/admin.css'))
+        ->prependStylesheet($this->basePath('js/plugins/dragndrop/dragndrop.css'))
         ->prependStylesheet($this->basePath('css/skins/skin-blue.min.css'))
         ->prependStylesheet($this->basePath('css/AdminLTE.min.css'))
         ->prependStylesheet('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css')
@@ -20,6 +21,7 @@
         ->prependStylesheet($this->basePath('css/bootstrap.min.css')); ?>
 
     <?php echo $this->headScript()
+        ->prependFile($this->basePath('js/plugins/dragndrop/dragndrop.js'))
         ->prependFile($this->basePath('js/AdminLTE.min.js'))
         ->prependFile($this->basePath('js/bootstrap.min.js'))
         ->prependFile($this->basePath('js/jquery.min.js'))
