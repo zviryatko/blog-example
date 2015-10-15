@@ -39,7 +39,6 @@ Installation
 Install phing with git support:
 
     composer global require phing/phing
-    composer global require pear/versioncontrol_git:dev-master
     
 And install via:
 

@@ -1,9 +1,5 @@
 <project name="blog-example" default="build" basedir=".">
 
-    <target name="git.pull" description="Pull latest updates from repository">
-        <gitpull repository="${project.basedir}" source="origin" refspec="master" quiet="true" force="true" keep="true"  norebase="true"/>
-    </target>
-
     <target name="composer" description="Installing dependencies">
         <exec logoutput="true" command="composer install --no-interaction --prefer-dist -o"/>
     </target>
@@ -12,7 +8,7 @@
         <exec logoutput="true" command="vendor/bin/doctrine-module orm:schema-tool:update --force"/>
     </target>
 
-    <target name="mysql" description="Create database">
+    <target name="create_mysql" description="Create database">
         <trycatch property="error">
             <try>
                 <pdosqlexec url="mysql:host=${db.host};port=${db.port}" userid="${db.user}" password="${db.pass}">
@@ -20,20 +16,45 @@
                 </pdosqlexec>
             </try>
             <catch>
-                <fail message="${error}"/>
+                <echo message="${error}"/>
+                <input propertyName="db.root_user" message="Database root user:"/>
+                <input propertyName="db.root_pass" message="Database root pass:"/>
+                <if>
+                    <and>
+                        <isset property="db.root_user"/>
+                        <isset property="db.root_pass"/>
+                    </and>
+                    <then>
+                        <phingcall target="create_mysql">
+                            <property name="db.user" value="db.root_user"/>
+                            <property name="db.pass" value="db.root_pass"/>
+                        </phingcall>
+                    </then>
+                </if>
             </catch>
         </trycatch>
+    </target>
+
+    <target name="check_database" description="Check if database exists and accessible">
+        <try>
+            <pdosqlexec url="mysql:host=${db.host};port=${db.port}" userid="${db.user}" password="${db.pass}">
+                USE ${db.name};
+            </pdosqlexec>
+        </try>
+        <catch>
+            <phingcall target="create_mysql"/>
+        </catch>
     </target>
 
     <target name="config" description="Setup basic configuration">
         <copy file="config/autoload/doctrine.orm.local.php.dist" tofile="config/autoload/doctrine.orm.local.php" overwrite="true">
             <filterchain>
                 <replacetokens begintoken="__" endtoken="__">
-                    <token key="NAME" value="${db.name}" />
-                    <token key="HOST" value="${db.host}" />
-                    <token key="PORT" value="${db.port}" />
-                    <token key="USER" value="${db.user}" />
-                    <token key="PASS" value="${db.pass}" />
+                    <token key="NAME" value="${db.name}"/>
+                    <token key="HOST" value="${db.host}"/>
+                    <token key="PORT" value="${db.port}"/>
+                    <token key="USER" value="${db.user}"/>
+                    <token key="PASS" value="${db.pass}"/>
                 </replacetokens>
             </filterchain>
         </copy>
@@ -47,27 +68,26 @@
         <input propertyName="db.pass" message="Database pass:"/>
         <if>
             <and>
-                <isset property="db.name" />
-                <isset property="db.host" />
-                <isset property="db.port" />
-                <isset property="db.user" />
-                <isset property="db.pass" />
+                <isset property="db.name"/>
+                <isset property="db.host"/>
+                <isset property="db.port"/>
+                <isset property="db.user"/>
+                <isset property="db.pass"/>
             </and>
             <then>
-                <phingcall target="git.pull"/>
                 <phingcall target="composer"/>
-                <phingcall target="mysql"/>
+                <phingcall target="check_database"/>
                 <phingcall target="config"/>
                 <phingcall target="doctrine"/>
             </then>
             <else>
                 <fail>
-Can't create database.
-Usage: phing -Ddb.host=localhost -Ddb.port=3306 -Ddb.user=root -Ddb.pass=password -Ddb.name=example install
+                    Can't create database.
+                    Usage: phing -Ddb.host=localhost -Ddb.port=3306 -Ddb.user=root -Ddb.pass=password -Ddb.name=example install
                 </fail>
             </else>
         </if>
     </target>
 
-    <target name="build" description="Update code and database, regular task" depends="git.pull, composer, doctrine"/>
+    <target name="build" description="Update code and database, regular task" depends="composer, doctrine"/>
 </project>
