@@ -17,6 +17,7 @@ use Zend\Stdlib\ArrayUtils;
 use Zend\View\Helper\Navigation\PluginManager;
 use Zend\View\Helper\Placeholder\Container\AbstractContainer;
 use Zend\View\HelperPluginManager;
+use Zend\Session\Container;
 
 class Module
 {
@@ -34,6 +35,13 @@ class Module
         $routePluginManager = $serviceManager->get('RoutePluginManager');
         $config = $serviceManager->get('Config');
         $config['router']['route_plugins'] = $routePluginManager;
+
+        $application = $event->getApplication();
+        $serviceManager = $application->getServiceManager();
+        $request = $event->getRequest();
+        $translator = $serviceManager->get('translator');
+        $config = $serviceManager->get('config');
+        $this->initTranslator($translator, $config, $request);
     }
 
     public function onRoute(MvcEvent $event)
@@ -92,5 +100,34 @@ class Module
                 ),
             ),
         );
+    }
+
+    public function getServiceConfig()
+    {
+      return array(
+        'factories' => array(
+          'Lang_switcher' => 'Application\SwitchLang\ApplicationSwitchLangFactory',
+        ),
+      );
+    }
+
+    protected function initTranslator($translator, $config, $request)
+    {
+      $language = $request->getQuery()->language;
+      $session = new Container('language');
+      $session_lang = $session->language;
+      if (isset($config['translator']['locale']['available'][$language])){
+        $session->language = $language;
+        $translator
+          ->setLocale($language);
+      }
+      elseif (isset($config['translator']['locale']['available'][$session_lang])){
+        $translator
+          ->setLocale($session_lang);
+      }else{
+        $session->language = 'en_US';
+        $translator
+          ->setLocale('en_US');
+      }
     }
 }
