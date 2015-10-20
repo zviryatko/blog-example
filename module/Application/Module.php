@@ -17,6 +17,7 @@ use Zend\Stdlib\ArrayUtils;
 use Zend\View\Helper\Navigation\PluginManager;
 use Zend\View\Helper\Placeholder\Container\AbstractContainer;
 use Zend\View\HelperPluginManager;
+use Zend\Session\Container;
 
 class Module
 {
@@ -40,7 +41,31 @@ class Module
     {
         $route = $event->getRouteMatch();
         $request = $event->getRequest();
+        $app = $event->getApplication();
+        $serviceManager = $app->getServiceManager();
+        $config = $serviceManager->get('Config');
         if ($request instanceof Request) {
+            // Set translator locale.
+            if (is_array($config) && isset($config['translator'])) {
+                $translator = $serviceManager->get('translator');
+                $translatorConfig = $config['translator'];
+
+                $session = new Container('language');
+                $language = $translatorConfig['locale']['default'];
+                if (isset($session->language)) {
+                    $language = $session->language;
+                }
+                $language = $request->getQuery('language', $language);
+
+                if (isset($translatorConfig['available'])
+                    && array_key_exists($language, $translatorConfig['available'])
+                ) {
+                    $translator->setLocale($language);
+                    $session->language = $language;
+                    $route->setParam('language', $language);
+                }
+            }
+
             // Set default route pagination and order params.
             $route->setParam('page', (int)$request->getQuery('page', $route->getParam('page', 1)));
             $route->setParam('length', (int)$request->getQuery('length', $route->getParam('length', 10)));

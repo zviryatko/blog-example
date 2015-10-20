@@ -12,5 +12,14 @@
  */
 
 return array(
-    // ...
+    'translator' => array(
+        'locale' => array(
+            'default' => 'en_US',
+        ),
+        'available' => array(
+            'nl_NL' => 'Dutch',
+            'ua_UA' => 'Ukrainian',
+            'en_US' => 'English',
+        ),
+    ),
 );

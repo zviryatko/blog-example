@@ -43,6 +43,8 @@
                         <li><a href="<?php echo $this->url('user') ?>"><?php echo $this->translate('Profile') ?></a></li>
                         <li><a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate('Admin') ?></a></li>
                     </ul>
+
+                    <?php echo $this->navigation('Application\Navigation\LanguageNavigation')->menu()->setUlClass('nav navbar-nav pull-right'); ?>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
