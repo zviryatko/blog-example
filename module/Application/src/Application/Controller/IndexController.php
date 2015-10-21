@@ -11,7 +11,6 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use ZfcUser\Entity\User;
 
 class IndexController extends AbstractActionController
 {

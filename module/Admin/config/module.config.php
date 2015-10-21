@@ -39,6 +39,14 @@ return array(
             ),
         ),
     ),
+    'bjyauthorize' => [
+        'guards' => [
+            \BjyAuthorize\Guard\Route::class => [
+                ['route' => 'admin', 'roles' => ['admin']],
+                ['route' => 'admin/login', 'roles' => ['guest']],
+            ],
+        ],
+    ],
     'service_manager' => array(
         'factories' => array(
             'Zend\Navigation\Admin' => 'Admin\Navigation\AdminNavigationFactory',

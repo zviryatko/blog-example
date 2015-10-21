@@ -10,6 +10,8 @@ return array(
         'ZendDeveloperTools',
         'DoctrineModule',
         'DoctrineORMModule',
+        'DoctrineDataFixtureModule',
+        'BjyAuthorize',
         'QuCKEditor',
         'Application',
         'Admin',

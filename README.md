@@ -5,6 +5,7 @@ Example of ZF2 + Doctrine application.
 
 [Demo](http://zf2-demo.makeyoulivebetter.org.ua/admin/login)
 
+Admin: `admin@makeyoulivebetter.org.ua`
 User: `jane.doe@makeyoulivebetter.org.ua`
 
 Pass: `demo`
@@ -23,8 +24,8 @@ ToDo
 
 - [x] Articles admin pages (list, add, edit)
 - [ ] User admin pages (list, add, edit, view)
-- [ ] ACL, user roles and pemissions
-- [ ] Fix password hash generating
+- [x] ACL, user roles and pemissions
+- [x] Fix password hash generating
 - [ ] Move file save path to config per entity
 - [ ] Drag-n-drop upload, multi-upload
 

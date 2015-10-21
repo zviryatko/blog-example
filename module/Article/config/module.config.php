@@ -102,6 +102,20 @@ return array(
             ),
         ),
     ),
+    'bjyauthorize' => [
+        'guards' => [
+            \BjyAuthorize\Guard\Route::class => [
+                ['route' => 'article', 'roles' => ['guest', 'user']],
+                ['route' => 'article/view', 'roles' => ['guest', 'user']],
+                // User administrate access
+                ['route' => 'admin/article', 'roles' => ['admin']],
+                ['route' => 'admin/article/index', 'roles' => ['admin']],
+                ['route' => 'admin/article/add', 'roles' => ['admin']],
+                ['route' => 'admin/article/edit', 'roles' => ['admin']],
+                ['route' => 'admin/article/delete', 'roles' => ['admin']],
+            ],
+        ],
+    ],
     'navigation' => array(
         'admin' => array(
             'article' => array(

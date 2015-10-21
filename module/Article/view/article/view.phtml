@@ -22,7 +22,7 @@ $this->headTitle($this->escapeHtml($article->getTitle()));
 
 <p class="metadata">
     <?php printf($this->translate('Posted by %s | on %s'), $this->username($article->getAuthor()), $this->articleMetadata($article)); ?>
-    <?php if ($this->identity()): ?>
+    <?php if ($this->isAllowed('route/admin/article/edit')): ?>
     <span class="btn-group btn-group-xs">
         <a class="btn btn-warning"  href="<?php echo $this->url('admin/article/edit', array('id' => $article->getId()), array('query' => array('destination' => $this->url(null, array('id' => $article->getId()))))); ?>">
             <i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>

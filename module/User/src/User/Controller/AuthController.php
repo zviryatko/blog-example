@@ -62,10 +62,6 @@ class AuthController extends AbstractController
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
-                // @todo: remove this, @see UserService::hashPassword().
-                $pass = $user->getPassword();
-                $user->setPassword(UserService::hashPassword($pass));
-
                 $objectManager = $this
                     ->getServiceLocator()
                     ->get('Doctrine\ORM\EntityManager');

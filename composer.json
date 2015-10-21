@@ -15,6 +15,9 @@
         "rwoverdijk/assetmanager": "^1.4",
         "zendframework/zftool": "^0.1.0",
         "qu-modules/qu-ckeditor": "dev-master",
-        "aboustayyef/summarizer": "dev-master"
+        "aboustayyef/summarizer": "dev-master",
+        "bjyoungblood/bjy-authorize": "1.4.*",
+        "hounddog/doctrine-data-fixture-module": "0.0.*",
+        "ircmaxell/password-compat": "1.*"
     }
 }

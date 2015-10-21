@@ -46,6 +46,10 @@
         </catch>
     </target>
 
+    <target name="doctrine_import_fixtures" description="Import doctrine fixtures">
+        <exec logoutput="true" command="php public/index.php data-fixture:import" />
+    </target>
+
     <target name="config" description="Setup basic configuration">
         <copy file="config/autoload/doctrine.orm.local.php.dist" tofile="config/autoload/doctrine.orm.local.php" overwrite="true">
             <filterchain>
@@ -79,6 +83,7 @@
                 <phingcall target="check_database"/>
                 <phingcall target="config"/>
                 <phingcall target="doctrine"/>
+                <phingcall target="doctrine_import_fixtures"/>
             </then>
             <else>
                 <fail>

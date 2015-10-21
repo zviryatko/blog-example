@@ -7,11 +7,14 @@
 namespace User\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use BjyAuthorize\Provider\Role\ProviderInterface as RoleProviderInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Zend\Crypt\Password\Bcrypt;
 
 /**
  * @ORM\Entity
  */
-class User
+class User implements RoleProviderInterface
 {
     /**
      * @ORM\Id
@@ -52,9 +55,17 @@ class User
      */
     protected $created;
 
+    /**
+     * @var Role[]|\Doctrine\Common\Collections\Collection
+     * @ORM\ManyToMany(targetEntity="User\Entity\Role", cascade={"persist","remove"})
+     * @ORM\JoinTable(name="user_roles")
+     */
+    protected $roles;
+
     public function __construct()
     {
         $this->setCreated(new \DateTime());
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -152,9 +163,26 @@ class User
      */
     public function setPassword($password)
     {
+        if (!$this->getId()) {
+            $password = password_hash($password, PASSWORD_BCRYPT);
+        }
+
         $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * Check user password.
+     *
+     * @param User $user
+     * @param      $password
+     *
+     * @return bool
+     */
+    public static function verifyPassword(User $user, $password)
+    {
+        return password_verify($password, $user->getPassword());
     }
 
     /**
@@ -175,5 +203,36 @@ class User
         $this->created = $created;
 
         return $this;
+    }
+
+    /**
+     * Get role.
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles->toArray();
+    }
+
+
+    /**
+     * Add role
+     *
+     * @param Role $role
+     */
+    public function addRole(Role $role)
+    {
+        $this->roles[] = $role;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param Role $roles
+     */
+    public function removeRole(Role $roles)
+    {
+        $this->roles->removeElement($roles);
     }
 }

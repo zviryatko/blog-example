@@ -134,6 +134,38 @@ return array(
             ),
         ),
     ),
+    'bjyauthorize' => [
+        'guards' => [
+            \BjyAuthorize\Guard\Route::class => [
+                ['route' => 'user', 'roles' => ['guest', 'user']],
+                ['route' => 'user/view', 'roles' => ['guest', 'user']],
+                ['route' => 'user/login', 'roles' => ['guest']],
+                ['route' => 'user/logout', 'roles' => ['user']],
+                ['route' => 'user/register', 'roles' => ['guest']],
+                ['route' => 'user/password', 'roles' => ['guest']],
+                // User administrate access
+                ['route' => 'admin/user', 'roles' => ['admin']],
+                ['route' => 'admin/user/index', 'roles' => ['admin']],
+                ['route' => 'admin/user/add', 'roles' => ['admin']],
+                ['route' => 'admin/user/view', 'roles' => ['admin']],
+                ['route' => 'admin/user/view/edit', 'roles' => ['admin']],
+            ],
+        ],
+        'default_role' => 'guest',
+        'authenticated_role' => 'user',
+        'identity_provider' => \User\Provider\Identity\AuthenticationIdentityProvider::class,
+        'role_providers' => [
+            \BjyAuthorize\Provider\Role\Config::class => [
+                'guest' => [],
+            ],
+            \BjyAuthorize\Provider\Role\ObjectRepositoryProvider::class => [
+                // class name of the entity representing the role
+                'role_entity_class' => 'User\Entity\Role',
+                // service name of the object manager
+                'object_manager' => 'Doctrine\ORM\EntityManager',
+            ],
+        ],
+    ],
     'view_manager' => array(
         'template_path_stack' => array(
             'users' => __DIR__ . '/../view',
@@ -151,6 +183,7 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
+            'User\Provider\Identity\AuthenticationIdentityProvider' => 'User\Service\AuthenticationIdentityProviderFactory',
         ),
         'aliases' => array(
             'Zend\Authentication\AuthenticationService' => 'doctrine.authenticationservice.default',
@@ -197,9 +230,12 @@ return array(
                 'identity_class' => 'User\Entity\User',
                 'identity_property' => 'email',
                 'credential_property' => 'password',
-                'credential_callable' => 'User\Service\UserService::verifyHashedPassword',
+                'credential_callable' => 'User\Entity\User::verifyPassword',
             ),
         ),
+    ),
+    'data-fixture' => array(
+        'User_fixture' => __DIR__ . '/../src/User/Fixture',
     ),
     'navigation' => array(
         'admin' => array(
