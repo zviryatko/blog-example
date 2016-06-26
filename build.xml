@@ -36,14 +36,16 @@
     </target>
 
     <target name="check_database" description="Check if database exists and accessible">
-        <try>
-            <pdosqlexec url="mysql:host=${db.host};port=${db.port}" userid="${db.user}" password="${db.pass}">
-                USE ${db.name};
-            </pdosqlexec>
-        </try>
-        <catch>
-            <phingcall target="create_mysql"/>
-        </catch>
+        <trycatch property="error">
+            <try>
+                <pdosqlexec url="mysql:host=${db.host};port=${db.port}" userid="${db.user}" password="${db.pass}">
+                    USE ${db.name};
+                </pdosqlexec>
+            </try>
+            <catch>
+                <phingcall target="create_mysql"/>
+            </catch>
+        </trycatch>
     </target>
 
     <target name="doctrine_import_fixtures" description="Import doctrine fixtures">
